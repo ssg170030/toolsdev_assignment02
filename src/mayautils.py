@@ -1,7 +1,9 @@
 import logging
 
+
 import pymel.core as pmc
 from pymel.core.system import Path
+
 
 
 log = logging.getLogger(__name__)
@@ -17,7 +19,7 @@ class SceneFile(object):
        ext (str
     """
 
-    def __init__(self, dir=' ', descriptor='main', version=1, ext='ma'):
+    def __init__(self, dir =' ', descriptor='main', version=1, ext='ma'):
         # leave one space
         self._dir = Path(dir)
         self.descriptor = descriptor
