@@ -1,10 +1,7 @@
 import logging
 
-
 import pymel.core as pmc
 from pymel.core.system import Path
-
-
 
 log = logging.getLogger(__name__)
 
@@ -12,28 +9,32 @@ log = logging.getLogger(__name__)
 class SceneFile(object):
     """This class represents a DCC software scene file
 
-    Attributes
-       dir (Path
-       descriptor (str
-       version (int
-       ext (str
+    Attributes for UI titles in maya
+       dir (Path to the project that it is set to)
+       descriptor (str or name of title user puts)
+       version (constant number 1 to infinity)
+       ext (str, name of program to open up)
     """
 
-    def __init__(self, dir ='', descriptor='main', version=1, ext='ma'):
+    def __init__(self, dir='', descriptor='', version=1, ext='ma'):
         # leave one space
         self._dir = Path(dir)
         self.descriptor = descriptor
         self.version = version
         self.ext = ext
 
+
     @property
+    #gets the location from computer
     def dir(self):
         print("getting")
         return Path(self._dir)
+    #sets location of folder
     @dir.setter
     def dir(self, val):
         print("setting")
         self._dir = Path(val)
+
 
     #  METHOD
     def basename(self):
@@ -62,4 +63,3 @@ class SceneFile(object):
             log.warning("Missing directories. Creating directories")
             self.dir.makedirs_p()
             pmc.system.saveAs(self.path())
-

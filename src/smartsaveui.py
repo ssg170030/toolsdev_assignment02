@@ -1,4 +1,3 @@
-
 import maya.OpenMayaUI as omui
 from PySide2 import QtWidgets, QtCore
 from shiboken2 import wrapInstance
@@ -31,8 +30,7 @@ class SmartSaveUI(QtWidgets.QDialog):
         super(SmartSaveUI, self).__init__(parent=maya_main_window())
         self.scene = mayautils.SceneFile()
 
-        print(self.scene.dir)
-        print(self.scene.version)
+        #name of GUI Window
         self.setWindowTitle("Smart Save")
         # resize a window
         self.resize(500, 200)
@@ -42,6 +40,7 @@ class SmartSaveUI(QtWidgets.QDialog):
         self.create_widgets()
         self.window_layout()
         self.create_connections()
+        #self._filepath_()
 
     def create_widgets(self):
         """Create widgets for our UI"""
@@ -53,6 +52,7 @@ class SmartSaveUI(QtWidgets.QDialog):
         self.dir_le.setText(self.scene.dir)
         #Browse button
         self.browse_btn = QtWidgets.QPushButton("Browse...")
+
 
         self.descriptor_lbl = QtWidgets.QLabel("Descripter")
         self.descriptor_le = QtWidgets.QLineEdit()
@@ -73,9 +73,11 @@ class SmartSaveUI(QtWidgets.QDialog):
     def _directory_layout_(self):
         # horzontal layput
         self.directory_lay = QtWidgets.QHBoxLayout()
+        self.directory_le = QtWidgets.QHBoxLayout()
         self.directory_lay.addWidget(self.dir_lbl)
         self.directory_lay.addWidget(self.dir_le)
         self.directory_lay.addWidget(self.browse_btn)
+        self.directory_le.addWidget(self.browse_btn)
         self.main_layout.addLayout(self.directory_lay)
 
 
@@ -118,9 +120,7 @@ class SmartSaveUI(QtWidgets.QDialog):
         self._ext_layout_()
         self._bottom_button_layout_()
         self.setLayout(self.main_layout)
-
         self.main_layout.addStretch()
-
 
 
 
@@ -131,6 +131,7 @@ class SmartSaveUI(QtWidgets.QDialog):
         self.increment_save_btn.clicked.connect(self.increment_save)
 
 
+    @QtCore.Slot()
     def _populate_scenefile_properties(self):
         """Populates the SceneFile objects Properties from UI Window"""
         self.scene.dir = self.dir_le.text()
@@ -138,6 +139,7 @@ class SmartSaveUI(QtWidgets.QDialog):
         self.scene.version = self.version_spinbox.value()
         self.scene.ext = self.ext_le.text()
         self.browse_btn.ext = self.scene
+
     @QtCore.Slot()
     def save(self):
         """Saves the scene file"""
@@ -148,8 +150,6 @@ class SmartSaveUI(QtWidgets.QDialog):
         """Automatically finds the next availble version on disks and saves up"""
         self._populate_scenefile_properties()
         self.scene.increment_and_save()
-
-
 
 
     @QtCore.Slot()
