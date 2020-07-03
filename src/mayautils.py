@@ -16,7 +16,7 @@ class SceneFile(object):
        ext (str, name of program to open up)
     """
 
-    def __init__(self, dir='', descriptor='', version=1, ext='ma'):
+    def __init__(self, dir ='', descriptor='main', version=1, ext='ma'):
         # leave one space
         self._dir = Path(dir)
         self.descriptor = descriptor
@@ -54,7 +54,7 @@ class SceneFile(object):
     def path(self):
 
         return Path(self.dir) / self.basename()
-
+    """Function to continue running without by excepting Only RuntimeError"""
     def save(self):
         try:
             pmc.system.saveAs(self.path())
