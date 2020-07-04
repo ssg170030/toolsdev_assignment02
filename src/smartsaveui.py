@@ -63,10 +63,11 @@ class SmartSaveUI(QtWidgets.QDialog):
         self.title_lbl.setStyleSheet("font: bold 40px")
 
     def directory_widget(self):
-        #label used to browse for the directory
+        """label used to browse for the directory"""
         self.dir_lbl = QtWidgets.QLabel("Directory")
         self.dir_le = QtWidgets.QLineEdit()
-        self.dir_file = QtWidgets.QFileSystemModel()
+        self.dir_file = QtWidgets.QFileDialog()
+
 
         self.dir_le.setText(self.scene.dir)
 
@@ -83,7 +84,9 @@ class SmartSaveUI(QtWidgets.QDialog):
 
         self.version_lbl = QtWidgets.QLabel("Version")
         self.version_spinbox = QtWidgets.QSpinBox()
+        self.version_file = QtWidgets.QFileDialog()
         self.version_spinbox.setValue(self.scene.version)
+
 
     def extension_widget(self):
 
@@ -95,7 +98,7 @@ class SmartSaveUI(QtWidgets.QDialog):
     def create_button(self):
 
         self.save_btn = QtWidgets.QPushButton("Save")
-        self.increment_save_btn = QtWidgets.QPushButton("Increment and Save")
+        self.version_file = QtWidgets.QPushButton("Increment and Save")
         self.cancel_btn = QtWidgets.QPushButton("Cancel")
         self.dir_file = QtWidgets.QPushButton("Browse...")
 
@@ -105,9 +108,10 @@ class SmartSaveUI(QtWidgets.QDialog):
         self.directory_lay = QtWidgets.QHBoxLayout()
         self.directory_le = QtWidgets.QHBoxLayout()
         self.directory_file = QtWidgets.QHBoxLayout()
+        self.directory_file.addWidget(self.dir_file)
         self.directory_lay.addWidget(self.dir_lbl)
         self.directory_lay.addWidget(self.dir_le)
-        self.directory_file.addWidget(self.dir_file)
+
 
         self.main_layout.addLayout(self.directory_lay)
         self.directory_lay.addWidget(self.dir_file)
@@ -124,9 +128,13 @@ class SmartSaveUI(QtWidgets.QDialog):
     def _version_layout_(self):
         """Puts a number for the version needed"""
         self.version_lay = QtWidgets.QHBoxLayout()
+
         self.version_lay.addWidget(self.version_lbl)
         self.version_lay.addWidget(self.version_spinbox)
+
         self.main_layout.addLayout(self.version_lay)
+
+
 
     def _ext_layout_(self):
         """extension for the name of a file like maya that reads ma"""
@@ -138,11 +146,11 @@ class SmartSaveUI(QtWidgets.QDialog):
     def _bottom_button_layout_(self):
         """Lays out button inputs for increment and save, save and close"""
         self.bottom_btn_lay = QtWidgets.QHBoxLayout()
-
-
-        self.bottom_btn_lay.addWidget(self.increment_save_btn)
+        #
+        self.bottom_btn_lay.addWidget(self.version_file)
         self.bottom_btn_lay.addWidget(self.save_btn)
         self.bottom_btn_lay.addWidget(self.cancel_btn)
+
         self.main_layout.addLayout(self.bottom_btn_lay)
 
 
@@ -166,7 +174,7 @@ class SmartSaveUI(QtWidgets.QDialog):
         Widgets are connected to the window so that they will execute"""
         self.cancel_btn.clicked.connect(self.cancel)
         self.save_btn.clicked.connect(self.save)
-        self.increment_save_btn.clicked.connect(self.increment_save)
+        self.version_file.clicked.connect(self.save)
         self.dir_file.clicked.connect(self._populate_scenefile_properties)
 
 

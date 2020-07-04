@@ -16,27 +16,29 @@ class SceneFile(object):
        ext (str, name of program to open up)
     """
 
-    def __init__(self, dir ='', descriptor='main', version=1, ext='ma'):
+    def __init__(self, dir='D:\Projects\toolsdev_assignment02\sandbox', descriptor='main', version=1, ext='ma'):
         # leave one space
         self._dir = Path(dir)
         self.descriptor = descriptor
         self.version = version
         self.ext = ext
 
-
     @property
-    #gets the location from computer
     def dir(self):
         print("getting")
         return Path(self._dir)
-    #sets location of folder
+
+    """gets the location from computer"""
+
     @dir.setter
     def dir(self, val):
         print("setting")
         self._dir = Path(val)
 
+    """sets location of folder"""
 
-    #  METHOD
+    """A Method used to store the PythonPath """
+
     def basename(self):
         """Returns the DCC scene file name
         e.g. ship_001.ma
@@ -54,7 +56,9 @@ class SceneFile(object):
     def path(self):
 
         return Path(self.dir) / self.basename()
+
     """Function to continue running without by excepting Only RuntimeError"""
+
     def save(self):
         try:
             pmc.system.saveAs(self.path())
