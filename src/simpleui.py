@@ -1,12 +1,12 @@
 import maya.OpenMayaUI as omui
 from PySide2 import QtWidgets, QtCore
-from shiboken2 import wrapInstance
+import shiboken2
 
 
 def maya_main_window():
     """Return the maya main window widget"""
     main_window = omui.MQtUtil.mainWindow()
-    return wrapInstance(long(main_window), QtWidgets.QWidget)
+    return shiboken2.wrapInstance(long(main_window), QtWidgets.QWidget)
 
 
 class SimpleUI(QtWidgets.QDialog):
